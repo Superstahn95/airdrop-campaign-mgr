@@ -1,7 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import Container from "../../../components/Container";
 import Button from "../../../components/Button";
 
 function Hero() {
+  const navigate = useNavigate();
+
   return (
     <div className="flex justify-center items-center h-[90vh]">
       <Container>
@@ -15,7 +18,7 @@ function Hero() {
           </p>
         </div>
         <div className="w-full flex items-center justify-center">
-          <Button text="Add Campaign" />
+          <Button text="Add Campaign" callback={() => navigate("/add")} />
         </div>
       </Container>
     </div>
