@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Container from "../Container";
 import Button from "../Button";
 function Navbar() {
@@ -5,10 +6,16 @@ function Navbar() {
     <div className=" p-4 border-b border-white h-[10vh] flex items-center justify-center">
       <Container>
         <div className="flex items-center justify-between">
-          <h3 className="font-montserrat font-bold text-2xl text-white">
+          <Link
+            to="/"
+            className="font-montserrat font-bold text-2xl text-white"
+          >
             AirdropManager
-          </h3>
-          <Button text="Connect Wallet" />
+          </Link>
+          <Button
+            text="Connect Wallet"
+            callback={() => console.log("connect your wallet")}
+          />
         </div>
       </Container>
     </div>

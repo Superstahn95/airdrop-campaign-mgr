@@ -1,0 +1,203 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { useState } from "react";
+import { FaPlus, FaMinus } from "react-icons/fa";
+import Button from "../../../components/Button";
+
+type LinkType = {
+  link: string;
+  description: string;
+};
+function NewCampaign() {
+  const [links, setLinks] = useState<LinkType[]>([]);
+  const [name, setName] = useState<string>("");
+  const [description, setDescription] = useState("");
+  const [linkCount, setLinkCount] = useState<number>(1);
+  const [steps, setSteps] = useState<string[]>([]);
+  const [stepCount, setStepCount] = useState<number>(1);
+
+  const handleLinkCountIncrement = () => {
+    setLinkCount(linkCount + 1);
+  };
+  const handleLinkCountDecrement = (i: number) => {
+    setLinkCount(linkCount - 1);
+    // remove object with that index from the array
+    const newLinks = links.filter((value, index) => index !== i);
+    setLinks(newLinks);
+  };
+
+  const handleLinkOnchange = (
+    index: number,
+    field: "link" | "description",
+    entry: string
+  ) => {
+    const updatedLinks = links.map((link, i) => {
+      if (index === i) {
+        // carry out computation here
+        link[field] = entry;
+        return link;
+      } else {
+        return link;
+      }
+    });
+    setLinks(updatedLinks);
+  };
+  const handleStepCountDecrement = (i: number) => {
+    setStepCount(stepCount - 1);
+    const newSteps = steps.filter((value, index) => index !== i);
+    setSteps(newSteps);
+  };
+
+  const handleStepOnchange = (index: number, entry: string) => {
+    setSteps((prevSteps) =>
+      prevSteps.map((step, i) => (i === index ? entry : step))
+    );
+  };
+
+  return (
+    <div className="border border-white rounded-md p-4 my-5 font-montserrat">
+      <div className="flex items-center space-x-1 mb-4">
+        <h2 className="text-xl font-bold text-white capitalize">
+          New campiagn
+        </h2>
+        <FaPlus size={20} color="white" />
+      </div>
+
+      {/* campaign form */}
+      <form>
+        {/* airdrop name */}
+        <div className="w-full grid md:grid-cols-2 gap-8">
+          <div className="mb-4 flex flex-col space-y-2">
+            <label className="text-white mb-2">Name</label>
+            <input
+              type="text"
+              className=" w-full border border-white outline-none p-2 bg-white rounded-md text-black "
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
+          {/* airdrop description */}
+          <div className=" flex flex-col space-y-2">
+            <label className="text-white mb-2">Description</label>
+            <textarea
+              name=""
+              id=""
+              className=" w-full border border-white outline-none p-2 bg-white rounded-md text-black"
+              onChange={(e) => setDescription(e.target.value)}
+            ></textarea>
+          </div>
+          {/* airdrop links */}
+          <div className="">
+            {Array(linkCount)
+              .fill(linkCount)
+              .map((value, index) => {
+                return (
+                  <div className="mb-2">
+                    <label className="text-white mb-2">Link {index + 1}</label>
+                    {/* link div */}
+                    <>
+                      <div className="flex flex-col space-y-2 mb-1">
+                        <input
+                          type="text"
+                          className=" w-full border border-white outline-none p-2 bg-white rounded-md text-black"
+                          placeholder="link description"
+                          onChange={(e) =>
+                            handleLinkOnchange(
+                              index,
+                              "description",
+                              e.target.value
+                            )
+                          }
+                        />
+                      </div>
+                      <div className="flex items-center space-x-3">
+                        <input
+                          type="text"
+                          className=" w-full border border-white outline-none p-2 bg-white rounded-md text-black "
+                          placeholder="link"
+                          onChange={(e) =>
+                            handleLinkOnchange(index, "link", e.target.value)
+                          }
+                        />
+                        {linkCount - 1 === index ? (
+                          <button
+                            type="button"
+                            onClick={handleLinkCountIncrement}
+                            className="p-2 rounded-md border border-white "
+                          >
+                            <FaPlus size={30} color="white" />
+                          </button>
+                        ) : (
+                          <button
+                            type="button"
+                            onClick={() => handleLinkCountDecrement(index)}
+                            className="p-2 rounded-md border border-white "
+                          >
+                            <FaMinus size={30} color="white" />
+                          </button>
+                        )}
+                      </div>
+                    </>
+                  </div>
+                );
+              })}
+          </div>
+          {/* airdrop steps */}
+          <div>
+            {Array(stepCount)
+              .fill(stepCount)
+              .map((value, index) => {
+                return (
+                  <div className="mb-2">
+                    <label className="text-white mb-2">Step {index + 1}</label>
+                    {/* link div */}
+                    <>
+                      <div className="flex flex-col space-y-2 mb-1"></div>
+                      <div className="flex items-center space-x-3">
+                        <input
+                          type="text"
+                          className=" w-full border border-white outline-none p-2 bg-white rounded-md text-black "
+                          placeholder="enter step"
+                          onChange={(e) =>
+                            handleStepOnchange(index, e.target.value)
+                          }
+                        />
+                        {stepCount - 1 === index ? (
+                          <button
+                            type="button"
+                            onClick={() => setStepCount((prev) => prev + 1)}
+                            className="p-2 rounded-md border border-white "
+                          >
+                            <FaPlus size={30} color="white" />
+                          </button>
+                        ) : (
+                          <button
+                            type="button"
+                            onClick={() => handleStepCountDecrement(index)}
+                            className="p-2 rounded-md border border-white "
+                          >
+                            <FaMinus size={30} color="white" />
+                          </button>
+                        )}
+                      </div>
+                    </>
+                  </div>
+                );
+              })}
+          </div>
+        </div>
+        <div className="flex justify-end">
+          <Button text="Submit" callback={() => console.log("submit form")} />
+        </div>
+      </form>
+    </div>
+  );
+}
+
+export default NewCampaign;
+
+//index = 0             true      false    => if both are true show positive
+//linkCount = 1 ==> 1 - 1 = 0 && 1 !== 1
+//2-1
+
+// linkCount - 1 === index && linkCount !== 1 ?
+
+//linkCount minus 1 is always going to be index
