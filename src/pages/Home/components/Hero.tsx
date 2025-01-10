@@ -17,8 +17,9 @@ function Hero() {
             opened???
           </p>
         </div>
-        <div className="w-full flex items-center justify-center">
+        <div className="w-full flex items-center justify-center space-x-2">
           <Button text="Add Campaign" callback={() => navigate("/add")} />
+          <Button text="Campaigns" callback={() => navigate("/campaigns")} />
         </div>
       </Container>
     </div>
