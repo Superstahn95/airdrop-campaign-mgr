@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { LinkType } from "../AddCampaign/components/NewCampaign";
 import Navbar from "../../components/Navbar";
 import Container from "../../components/Container";
@@ -64,14 +64,40 @@ export interface Campaign {
 function Campaigns() {
   const isConnected = true;
   const [campaigns, setCampaigns] = useState<Campaign[] | null>();
+  const [displayedCampaigns, setDisplayedCampaigns] = useState<
+    Campaign[] | null
+  >();
   const [filterOption, setFilterOption] = useState<"all" | "open" | "closed">(
     "all"
   );
+
+  // Function to filter campaigns based on filterOption
+  const filterCampaigns = useCallback(() => {
+    switch (filterOption) {
+      case "open":
+        setDisplayedCampaigns(
+          campaigns?.filter((campaign) => campaign.isRunning)
+        );
+        break;
+      case "closed":
+        setDisplayedCampaigns(
+          campaigns?.filter((campaign) => !campaign.isRunning)
+        );
+        break;
+      case "all":
+      default:
+        setDisplayedCampaigns(campaigns);
+    }
+  }, [campaigns, filterOption]);
 
   useEffect(() => {
     //figure out a way to fetch user campaigns from smart contract
     setCampaigns(allCampaigns);
   }, []);
+
+  useEffect(() => {
+    filterCampaigns();
+  }, [filterOption, campaigns, filterCampaigns]);
   return (
     <>
       <Navbar />
@@ -88,7 +114,7 @@ function Campaigns() {
                 setFilterOption={setFilterOption}
               />
               <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-4">
-                {campaigns?.map((campaign) => (
+                {displayedCampaigns?.map((campaign) => (
                   <CampaignCard key={campaign.id} campaign={campaign} />
                 ))}
               </div>
