@@ -1,16 +1,15 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from "react";
 import { FaPlus, FaMinus } from "react-icons/fa";
 import Button from "../../../components/Button";
 
-type LinkType = {
+export type LinkType = {
   link: string;
   description: string;
 };
 function NewCampaign() {
   const [links, setLinks] = useState<LinkType[]>([]);
   const [name, setName] = useState<string>("");
-  const [description, setDescription] = useState("");
+  const [description, setDescription] = useState<string>("");
   const [linkCount, setLinkCount] = useState<number>(1);
   const [steps, setSteps] = useState<string[]>([]);
   const [stepCount, setStepCount] = useState<number>(1);
@@ -71,6 +70,7 @@ function NewCampaign() {
             <input
               type="text"
               className=" w-full border border-white outline-none p-2 bg-white rounded-md text-black "
+              value={name}
               onChange={(e) => setName(e.target.value)}
             />
           </div>
@@ -80,6 +80,7 @@ function NewCampaign() {
             <textarea
               name=""
               id=""
+              value={description}
               className=" w-full border border-white outline-none p-2 bg-white rounded-md text-black"
               onChange={(e) => setDescription(e.target.value)}
             ></textarea>
@@ -99,6 +100,7 @@ function NewCampaign() {
                           type="text"
                           className=" w-full border border-white outline-none p-2 bg-white rounded-md text-black"
                           placeholder="link description"
+                          value={links[index]?.description}
                           onChange={(e) =>
                             handleLinkOnchange(
                               index,
@@ -113,6 +115,7 @@ function NewCampaign() {
                           type="text"
                           className=" w-full border border-white outline-none p-2 bg-white rounded-md text-black "
                           placeholder="link"
+                          value={links[index]?.link}
                           onChange={(e) =>
                             handleLinkOnchange(index, "link", e.target.value)
                           }
@@ -156,6 +159,7 @@ function NewCampaign() {
                           type="text"
                           className=" w-full border border-white outline-none p-2 bg-white rounded-md text-black "
                           placeholder="enter step"
+                          value={steps[index]}
                           onChange={(e) =>
                             handleStepOnchange(index, e.target.value)
                           }
