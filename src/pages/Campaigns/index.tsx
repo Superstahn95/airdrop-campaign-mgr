@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { LinkType } from "../AddCampaign/components/NewCampaign";
 import Navbar from "../../components/Navbar";
 import Container from "../../components/Container";
+import Filter from "./components/Filter";
 import CampaignCard from "../../components/Campaign";
 
 // dummy campaings
@@ -63,6 +64,9 @@ export interface Campaign {
 function Campaigns() {
   const isConnected = true;
   const [campaigns, setCampaigns] = useState<Campaign[] | null>();
+  const [filterOption, setFilterOption] = useState<"all" | "open" | "closed">(
+    "all"
+  );
 
   useEffect(() => {
     //figure out a way to fetch user campaigns from smart contract
@@ -79,6 +83,10 @@ function Campaigns() {
             </div>
           ) : (
             <div className="mt-10">
+              <Filter
+                filterOption={filterOption}
+                setFilterOption={setFilterOption}
+              />
               <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-4">
                 {campaigns?.map((campaign) => (
                   <CampaignCard key={campaign.id} campaign={campaign} />

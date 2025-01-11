@@ -22,9 +22,9 @@ function CampiagnCard({ campaign }: CampaignCardProps) {
       <div className="text-white text-xs">
         Status:{" "}
         {campaign.isRunning ? (
-          <span className="text-xs text-green-500 font-bold">Open</span>
+          <span className="text-xs text-green-500 font-bold ml-2">Open</span>
         ) : (
-          <span className="text-xs text-red-500 font-bold">Closed</span>
+          <span className="text-xs text-red-500 font-bold ml-2">Closed</span>
         )}
       </div>
     </div>
