@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Campaign } from "../../pages/Campaigns";
 
 interface CampaignCardProps {
@@ -26,6 +27,13 @@ function CampiagnCard({ campaign }: CampaignCardProps) {
         ) : (
           <span className="text-xs text-red-500 font-bold ml-2">Closed</span>
         )}
+      </div>
+
+      {/* link to go to campaign page */}
+      <div className="my-2">
+        <Link to={`/campaign/${campaign.id}`} className="text-sm text-white">
+          See more
+        </Link>
       </div>
     </div>
   );

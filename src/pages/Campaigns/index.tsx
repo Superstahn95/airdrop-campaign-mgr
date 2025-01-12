@@ -6,7 +6,7 @@ import Filter from "./components/Filter";
 import CampaignCard from "../../components/Campaign";
 
 // dummy campaings
-const allCampaigns: Campaign[] = [
+export const allCampaigns: Campaign[] = [
   {
     id: "1",
     campaignLinks: [

@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home";
 import AddCampaign from "./pages/AddCampaign";
 import Campaigns from "./pages/Campaigns";
+import Campaign from "./pages/Campaign/Index";
 function App() {
   const router = createBrowserRouter([
     {
@@ -15,6 +16,10 @@ function App() {
     {
       path: "/campaigns",
       element: <Campaigns />,
+    },
+    {
+      path: "/campaign/:id",
+      element: <Campaign />,
     },
   ]);
   return (
