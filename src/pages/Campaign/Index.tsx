@@ -4,6 +4,7 @@ import { CiEdit } from "react-icons/ci";
 import { MdDeleteOutline } from "react-icons/md";
 import Navbar from "../../components/Navbar";
 import Container from "../../components/Container";
+import DeleteModal from "./components/DeleteModal";
 import { Campaign } from "../Campaigns";
 import { allCampaigns } from "../Campaigns";
 
@@ -78,6 +79,7 @@ function SingleCampaign() {
           </div>
         </Container>
       </div>
+      <DeleteModal />
     </>
   );
 }
