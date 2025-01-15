@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { CiEdit } from "react-icons/ci";
 import { MdDeleteOutline } from "react-icons/md";
 import Navbar from "../../components/Navbar";
@@ -10,6 +10,8 @@ import { allCampaigns } from "../Campaigns";
 
 function SingleCampaign() {
   const params = useParams();
+  const navigate = useNavigate();
+  const [showModal, setShowModal] = useState<boolean>(false);
   const [campaign, setCampaign] = useState<Campaign | null>(null);
   const id = params.id;
   useEffect(() => {
@@ -25,10 +27,16 @@ function SingleCampaign() {
             <div className="flex space-x-2 items-center">
               <h2 className="font-bold text-7xl">{campaign?.name}</h2>
               <div className="flex space-x-1">
-                <button className="text-green-500 p-2 rounded-md border border-white w-[50px] h-[50px] flex items-center justify-center">
+                <button
+                  onClick={() => navigate(`/edit/${campaign?.id}`)}
+                  className="text-green-500 p-2 rounded-md border border-white w-[50px] h-[50px] flex items-center justify-center"
+                >
                   <CiEdit size={30} />
                 </button>
-                <button className="text-red-500 p-2 rounded-md border border-white w-[50px] h-[50px] flex items-center justify-center">
+                <button
+                  onClick={() => setShowModal(true)}
+                  className="text-red-500 p-2 rounded-md border border-white w-[50px] h-[50px] flex items-center justify-center"
+                >
                   <MdDeleteOutline size={30} />
                 </button>
               </div>
@@ -79,7 +87,9 @@ function SingleCampaign() {
           </div>
         </Container>
       </div>
-      <DeleteModal />
+      {showModal && (
+        <DeleteModal id={campaign?.id as string} handleModal={setShowModal} />
+      )}
     </>
   );
 }

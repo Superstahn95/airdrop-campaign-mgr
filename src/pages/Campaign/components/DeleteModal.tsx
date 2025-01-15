@@ -11,7 +11,7 @@ function DeleteModal({ id, handleModal }: DeleteModalProps) {
   return (
     <>
       <div
-        className=" absolute top-0 left-0 bg-black/40 text-white w-screen h-screen"
+        className=" absolute top-0 left-0 bg-black/40 text-white w-screen h-screen cursor-pointer"
         onClick={() => handleModal(false)}
       />
       <div className="absolute top-1/2 left-1/2 bg-white rounded-xl w-[300px] h-[200px] -translate-x-1/2 -translate-y-1/2 p-4 flex flex-col items-center justify-center space-y-4 font-montserrat">
