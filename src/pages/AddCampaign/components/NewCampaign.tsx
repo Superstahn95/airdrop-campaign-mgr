@@ -197,11 +197,3 @@ function NewCampaign() {
 }
 
 export default NewCampaign;
-
-//index = 0             true      false    => if both are true show positive
-//linkCount = 1 ==> 1 - 1 = 0 && 1 !== 1
-//2-1
-
-// linkCount - 1 === index && linkCount !== 1 ?
-
-//linkCount minus 1 is always going to be index
