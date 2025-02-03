@@ -7,9 +7,8 @@ interface TransactionContextType {
   connectWallet: () => void;
 }
 
-const AirdropManagerContext = createContext<TransactionContextType | null>(
-  null
-);
+export const AirdropManagerContext =
+  createContext<TransactionContextType | null>(null);
 
 const CONTRACT_ADDRESS = "MyDeployedContractAdress";
 const CONTRACT_ABI: Interface | InterfaceAbi = [];
@@ -58,7 +57,18 @@ export default function AirdropManagerProvider({
       console.log(error);
     }
   };
-  const connectWallet = () => {};
+  const connectWallet = async () => {
+    try {
+      if (!window.ethereum) return alert("Please install metamask");
+      // this requests all the accounts and the user will choose to connect one
+      const accounts = await window.ethereum.request({
+        method: "eth_requestAccounts",
+      });
+      setCurrentAccount(accounts[0]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
     // check wallet connection whenever app loads
     checkIfWalletIsConnected();
