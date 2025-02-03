@@ -4,6 +4,7 @@ import AddCampaign from "./pages/AddCampaign";
 import Campaigns from "./pages/Campaigns";
 import Campaign from "./pages/Campaign/Index";
 import EditCampaign from "./pages/EditCampaign/index";
+import AirdropManagerProvider from "./context/AirdropManagerContext";
 function App() {
   const router = createBrowserRouter([
     {
@@ -28,9 +29,9 @@ function App() {
     },
   ]);
   return (
-    <>
+    <AirdropManagerProvider>
       <RouterProvider router={router} />
-    </>
+    </AirdropManagerProvider>
   );
 }
 

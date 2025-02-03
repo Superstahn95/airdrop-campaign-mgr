@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { Link } from "react-router-dom";
 import Container from "../Container";
 import Button from "../Button";
@@ -13,8 +15,10 @@ function Navbar() {
             AirdropManager
           </Link>
           <Button
-            text="Connect Wallet"
-            callback={() => console.log("connect your wallet")}
+            text="Connect wallet"
+            callback={() =>
+              console.log("connect or disconnect wwallet as the case may be")
+            }
           />
         </div>
       </Container>
