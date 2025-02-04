@@ -5,6 +5,12 @@ import { ethers, BrowserProvider, Interface, InterfaceAbi } from "ethers";
 interface TransactionContextType {
   currentAccount: string | null;
   connectWallet: () => void;
+  getAirdropCampaigns: () => void;
+  getSingleAirdropCampaign: () => void;
+  createAirdropCampaign: () => void;
+  tickCampaignAsCompleted: () => void;
+  updateAirdropCampaign: () => void;
+  deleteAirdropCampaign: () => void;
 }
 
 export const AirdropManagerContext =
@@ -25,6 +31,7 @@ const getEthereumContract = async () => {
   );
 
   console.log(provider, signer, airdropContract);
+  // should return the airdrop contract
 };
 
 export default function AirdropManagerProvider({
@@ -32,11 +39,6 @@ export default function AirdropManagerProvider({
 }: {
   children: ReactNode;
 }) {
-  // const [contract, setContract] = useState<string | null>(null);
-  // const [signer, setSigner] = useState<string | null>(null);
-  // const [provider, setProvider] = useState<string | null>(null);
-  // const [error, setError] = useState<string | null>(null);
-  // const [loading, setLoading] = useState(false);
   const [currentAccount, setCurrentAccount] = useState<string | null>("");
 
   const checkIfWalletIsConnected = async () => {
@@ -69,13 +71,31 @@ export default function AirdropManagerProvider({
       console.log(error);
     }
   };
+  //complete this function
+  const getAirdropCampaigns = () => {};
+  const createAirdropCampaign = () => {};
+  const getSingleAirdropCampaign = () => {};
+  const tickCampaignAsCompleted = () => {};
+  const updateAirdropCampaign = () => {};
+  const deleteAirdropCampaign = () => {};
   useEffect(() => {
     // check wallet connection whenever app loads
     checkIfWalletIsConnected();
   }, []);
 
   return (
-    <AirdropManagerContext.Provider value={{ currentAccount, connectWallet }}>
+    <AirdropManagerContext.Provider
+      value={{
+        currentAccount,
+        connectWallet,
+        getAirdropCampaigns,
+        createAirdropCampaign,
+        getSingleAirdropCampaign,
+        tickCampaignAsCompleted,
+        updateAirdropCampaign,
+        deleteAirdropCampaign,
+      }}
+    >
       {children}
     </AirdropManagerContext.Provider>
   );
