@@ -1,23 +1,35 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { createContext, useState, useEffect, ReactNode } from "react";
-import { ethers, BrowserProvider, Interface, InterfaceAbi } from "ethers";
+import { ethers, BrowserProvider } from "ethers";
+import { contractAbi, contractAddress } from "../utils/constants";
 
 interface TransactionContextType {
   currentAccount: string | null;
   connectWallet: () => void;
   getAirdropCampaigns: () => void;
   getSingleAirdropCampaign: () => void;
-  createAirdropCampaign: () => void;
+  createAirdropCampaign: (data: Campaign) => void;
   tickCampaignAsCompleted: () => void;
   updateAirdropCampaign: () => void;
   deleteAirdropCampaign: () => void;
+}
+interface Link {
+  link: string;
+  description: string;
+}
+
+interface Campaign {
+  name: string;
+  description: string;
+  campaignSteps: string[];
+  campaignLinks: Link[];
 }
 
 export const AirdropManagerContext =
   createContext<TransactionContextType | null>(null);
 
-const CONTRACT_ADDRESS = "MyDeployedContractAdress";
-const CONTRACT_ABI: Interface | InterfaceAbi = [];
+const CONTRACT_ADDRESS = contractAddress;
+const CONTRACT_ABI = contractAbi;
 
 const getEthereumContract = async () => {
   //get provider
@@ -54,6 +66,10 @@ export default function AirdropManagerProvider({
       if (accounts.length) {
         //set it to first account in the array if it doesn't return an empty array
         setCurrentAccount(accounts[0]);
+
+        // get campaigns ?????
+      } else {
+        console.log("no accounts found");
       }
     } catch (error) {
       console.log(error);
@@ -72,14 +88,24 @@ export default function AirdropManagerProvider({
     }
   };
   //complete this function
+  const createAirdropCampaign = async (data: Campaign) => {
+    if (!window.ethereum) return alert("Please install metamask");
+    try {
+      //send transaction to blockchain
+      const { campaignLinks, campaignSteps, description, name } = data;
+      console.log(campaignLinks, campaignSteps, description, name);
+      getEthereumContract();
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const getAirdropCampaigns = () => {};
-  const createAirdropCampaign = () => {};
   const getSingleAirdropCampaign = () => {};
   const tickCampaignAsCompleted = () => {};
   const updateAirdropCampaign = () => {};
   const deleteAirdropCampaign = () => {};
   useEffect(() => {
-    // check wallet connection whenever app loads
+    // check wallet connection whenever app loads which in turn sets the connectedAccount as the current account
     checkIfWalletIsConnected();
   }, []);
 
